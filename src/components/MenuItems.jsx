@@ -11,26 +11,28 @@ function MenuItems() {
 			theme='light'
 			mode='horizontal'
 			style={{
-				background: "#9f7aea",
+				background: "#04192e",
 				display: "flex",
-				fontSize: "17px",
-				fontWeight: "500",
 				width: "100%",
 				justifyContent: "center",
 			}}
 			defaultSelectedKeys={[pathname]}>
 			<Menu.Item key='/quickstart'>
-				<Button href='/quickstart'>
-				<a>🚀 Quick Start</a>
-				</Button>
+				<Link href='/quickstart'>
+					<Button size="large" shape="round" type="text">
+					<a>Quick Start</a>
+					</Button>
+				</Link>
 				{/* <Link href='/quickstart'>
-					<a>🚀 Quick Start</a>
+					<a>Quick Start</a>
 				</Link> */}
 			</Menu.Item>
 
 			<Menu.Item key='/wallet'>
 				<Link href='/wallet'>
-					<a>👛 Wallet</a>
+					<Button size="large" shape="round" type="text">
+					<a>Wallet</a>
+					</Button>
 				</Link>
 			</Menu.Item>
 			{/*
@@ -57,13 +59,17 @@ function MenuItems() {
 			*/}
 			<Menu.Item key='/nftBalance'>
 				<Link href='/nftBalance'>
-					<a>🖼 NFTs</a>
+					<Button size="large" shape="round" type="text">
+					<a>NFTs</a>
+					</Button>
 				</Link>
 			</Menu.Item>
 
 			<Menu.Item key='/contract'>
 				<Link href='/contract'>
-					<a>📄 Contract</a>
+					<Button size="large" shape="round" type="text">
+					<a>Contract</a>
+					</Button>
 				</Link>
 			</Menu.Item>
 		</Menu>

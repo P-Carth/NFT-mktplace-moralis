@@ -59,6 +59,23 @@ select {
   font: inherit;
 }
 
+
 .ant-menu-horizontal, .ant-menu-item::after, .ant-menu-submenu::after {
   border: none !important;
 }
+
+
+.ant-btn-text {
+  color: #257b8a;
+}
+
+.ant-btn-text:hover, .ant-btn-text:focus {
+  background: #257b8a;
+  color: #04192e;
+}
+
+.ant-btn-round.ant-btn-lg {
+  font-weight: 100;
+}
+
+
