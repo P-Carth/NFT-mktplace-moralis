@@ -11,7 +11,7 @@ function MenuItems() {
 			theme='light'
 			mode='horizontal'
 			style={{
-				background: "#04192e",
+				background: "#A020F0",
 				display: "flex",
 				width: "100%",
 				justifyContent: "center",

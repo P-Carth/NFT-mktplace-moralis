@@ -27,12 +27,12 @@ const styles = {
 		position: "fixed",
 		zIndex: 1,
 		width: "100%",
-		background: "#04192e",
+		background: "#A020F0",
 		display: "flex",
 		/*justifyContent: "center", */
 		fontFamily: "Verdana, sans-serif",
 		/* borderBottom: "2px solid rgba(0, 0, 0, 0.06)", */
-		padding: "0 10px",
+		padding: "0 20px",
 		boxShadow: "0 1px 10px rgb(151 164 175 / 10%)",
 		margin: "auto",
 		alignItems: "center",
@@ -52,7 +52,7 @@ function BaseLayout({ children }) {
 				<Logo />
 				<MenuItems />
 				<div style={styles.headerRight}>
-					<Chains />
+					{/* <Chains /> */}
 					<Account />
 				</div>
 			</Header>

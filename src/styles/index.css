@@ -66,12 +66,15 @@ select {
 
 
 .ant-btn-text {
-  color: #257b8a;
+  color: #fff;
 }
 
+
+
+
 .ant-btn-text:hover, .ant-btn-text:focus {
-  background: #257b8a;
-  color: #04192e;
+  background: #fff;
+  color: #A020F0;
 }
 
 .ant-btn-round.ant-btn-lg {
@@ -79,3 +82,37 @@ select {
 }
 
 
+randooo {
+  background: #591383
+}
+
+.ant-btn:active{
+  background: green;
+}
+/*
+.ant-menu-submenu-open{
+  background: rgb(121, 7, 70)
+}
+*/
+/*    #########    If you hold down button, it chnages colors
+.ant-menu.ant-menu-dark .ant-menu-item-selected, .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected{
+  background: orange;
+}
+.ant-menu-vertical .ant-menu-item, .ant-menu-vertical-left .ant-menu-item, .ant-menu-vertical-right .ant-menu-item, .ant-menu-inline .ant-menu-item, .ant-menu-vertical .ant-menu-submenu-title, .ant-menu-vertical-left .ant-menu-submenu-title, .ant-menu-vertical-right .ant-menu-submenu-title, .ant-menu-inline .ant-menu-submenu-title{
+  font-size: green;
+  color: yellow;
+}
+*/
+
+/*
+.ant-menu-submenu-open .ant-menu-submenu-title{
+  background: #4de130;
+  margin: 0;
+}
+*/
+
+
+.ant-menu-submenu-children {
+
+  background: red;
+}
