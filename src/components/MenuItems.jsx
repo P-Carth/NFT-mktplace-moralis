@@ -28,6 +28,14 @@ function MenuItems() {
 				</Link> */}
 			</Menu.Item>
 
+			<Menu.Item key='/explore'>
+				<Link href='/explore'>
+					<Button size="large" shape="round" type="text">
+					<a>Explore</a>
+					</Button>
+				</Link>
+			</Menu.Item>
+
 			<Menu.Item key='/wallet'>
 				<Link href='/wallet'>
 					<Button size="large" shape="round" type="text">

@@ -1,5 +1,6 @@
 import React from "react";
 import { MoralisProvider } from "react-moralis";
+import { MoralisDappProvider } from "providers/MoralisDappProvider/MoralisDappProvider";
 import Head from "next/head";
 
 import BaseLayout from "components/BaseLayout";
@@ -20,9 +21,11 @@ const Application = ({ Component, pageProps }) => {
 				<title>Nextjs Ethereum BoilerPlate</title>
 			</Head>
 			<MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
-				<BaseLayout>
-					<Component {...pageProps} isServerInfo={isServerInfo} />
-				</BaseLayout>
+				<MoralisDappProvider>
+					<BaseLayout>
+						<Component {...pageProps} isServerInfo={isServerInfo} />
+					</BaseLayout>
+				</MoralisDappProvider>
 			</MoralisProvider>
 		</>
 	);

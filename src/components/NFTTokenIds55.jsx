@@ -1,14 +1,6 @@
-import React, { useState } from "react";
-import { useMoralis, useNFTBalances } from "react-moralis";
+import React, { useEffect, useState } from 'react';
+import { useMoralisWeb3Api } from 'react-moralis';
 import { Card, Image, Tooltip, Modal, Input, Skeleton } from "antd";
-import {
-	FileSearchOutlined,
-	SendOutlined,
-	ShoppingCartOutlined,
-} from "@ant-design/icons";
-import { getExplorer } from "helpers/networks";
-import AddressInput from "./AddressInput";
-const { Meta } = Card;
 
 const styles = {
 	NFTs: {
@@ -23,55 +15,46 @@ const styles = {
 	},
 };
 
-function NFTBalance() {
-	const { data: NFTBalances } = useNFTBalances();
-	const { Moralis, chainId } = useMoralis();
-	const [visible, setVisibility] = useState(false);
-	const [receiverToSend, setReceiver] = useState(null);
-	const [amountToSend, setAmount] = useState(null);
-	const [nftToSend, setNftToSend] = useState(null);
-	const [isPending, setIsPending] = useState(false);
-
-	async function transfer(nft, amount, receiver) {
+const NFTTokenIds = () => {
+    const Web3Api = useMoralisWeb3Api();
+    const [count, setCount] = useState(0);
+    const [nftObject, setnftObject] = useState({});
+    const [nftArray, setNftArray] = useState([]);
+    const [artist, setArtist] = useState('');
+    //* 0xE93C817Ed22EA606B2a948C1536013013F34DBB9 !!!!!!!!!!!!GOOD!!!!!!!!!!!!!
+    //* 0x2995EdF91516499909a5b2565F95F3CD7F8e5Beb !!!!!!!!!! MINE !!!!!!!!!!!!!!
+    //* 0xa7a26b29d4530Ac7EAAFd8238474979508eE2D27 !!!!!!!!!! GOOD Rate limit 6 !!!!!!!!!
+	const fetchAllTokenIds = async () => {
 		const options = {
-			type: nft.contract_type,
-			tokenId: nft.token_id,
-			receiver: receiver,
-			contractAddress: nft.token_address,
+		  address: "0x7dE3085b3190B3a787822Ee16F23be010f5F8686",
+		  chain: "eth",
 		};
+		const NFTs = await Web3Api.token.getAllTokenIds(options);
+		console.log(NFTs);
+	  };
 
-		if (options.type === "erc1155") {
-			options.amount = amount;
-		}
+        
 
-		setIsPending(true);
-		await Moralis.transfer(options)
-			.then((tx) => {
-				console.log(tx);
-				setIsPending(false);
-			})
-			.catch((e) => {
-				alert(e.message);
-				setIsPending(false);
-			});
-	}
+        const NFTs = await Web3Api.token.getAllTokenIds(options);
+        let total = NFTs.result.length;
+        
+        setCount(total);
+        // console.log(total);
 
-	const handleTransferClick = (nft) => {
-		setNftToSend(nft);
-		setVisibility(true);
-	};
+        setNftArray([...NFTs.result])
+        // console.log(NFTs.result);
 
-	const handleChange = (e) => {
-		setAmount(e.target.value);
-	};
+        setnftObject(NFTs)
+        // console.log(nftObject)
+    }
 
-	console.log("NFTBalances", NFTBalances);
+	console.log("NFTTokenIds", NFTTokenIds);
 	return (
 		<>
 			<div style={styles.NFTs}>
-				<Skeleton loading={!NFTBalances?.result}>
-					{NFTBalances?.result ? (
-						NFTBalances.result.map((nft, index) => (
+				<Skeleton loading={!NFTTokenIds?.result}>
+					{NFTTokenIds?.result ? (
+						NFTTokenIds.result.map((nft, index) => (
 							<Card
 								hoverable
 								key={index}
@@ -131,27 +114,8 @@ function NFTBalance() {
 					)}
 				</Skeleton>
 			</div>
-			<Modal
-				title={`Transfer ${nftToSend?.name || "NFT"}`}
-				visible={visible}
-				onCancel={() => setVisibility(false)}
-				onOk={() => transfer(nftToSend, amountToSend, receiverToSend)}
-				confirmLoading={isPending}
-				okText='Send'>
-				<AddressInput
-					autoFocus
-					placeholder='Receiver'
-					onChange={setReceiver}
-				/>
-				{nftToSend && nftToSend.contract_type === "erc1155" && (
-					<Input
-						placeholder='amount to send'
-						onChange={(e) => handleChange(e)}
-					/>
-				)}
-			</Modal>
 		</>
 	);
 }
 
-export default NFTBalance;
+export default NFTTokenIds;

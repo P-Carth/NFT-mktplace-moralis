@@ -83,11 +83,12 @@ select {
 
 
 randooo {
-  background: #591383
+  background: #E33132
 }
 
 .ant-btn:active{
-  background: green;
+  background: #591383;
+  color: white;
 }
 /*
 .ant-menu-submenu-open{
@@ -111,8 +112,3 @@ randooo {
 }
 */
 
-
-.ant-menu-submenu-children {
-
-  background: red;
-}

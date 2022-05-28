@@ -78,6 +78,9 @@ function Account() {
             borderRadius: "0.5rem",
             fontSize: "16px",
             fontWeight: "500",
+            background: "#A020F0",
+            color: "#fff",
+            border: "#591383",
           }}
           onClick={() => {
             logout();
