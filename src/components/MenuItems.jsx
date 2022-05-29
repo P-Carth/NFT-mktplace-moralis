@@ -36,6 +36,7 @@ function MenuItems() {
 				</Link>
 			</Menu.Item>
 
+			{/*
 			<Menu.Item key='/wallet'>
 				<Link href='/wallet'>
 					<Button size="large" shape="round" type="text">
@@ -43,7 +44,6 @@ function MenuItems() {
 					</Button>
 				</Link>
 			</Menu.Item>
-			{/*
 			<Menu.Item key='/1inch'>
 				<Link href='/1inch'>
 					<a>🏦 Dex</a>
@@ -65,6 +65,13 @@ function MenuItems() {
 				</Link>
 			</Menu.Item>
 			*/}
+			<Menu.Item key='/nftBalanceTest'>
+				<Link href='/nftBalanceTest'>
+					<Button size="large" shape="round" type="text">
+					<a>NFTs Test</a>
+					</Button>
+				</Link>
+			</Menu.Item>
 			<Menu.Item key='/nftBalance'>
 				<Link href='/nftBalance'>
 					<Button size="large" shape="round" type="text">

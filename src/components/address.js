@@ -1,0 +1,1 @@
+export const address = 0x05C2eeBe1407D6e8a72391F719A056880019d16D
