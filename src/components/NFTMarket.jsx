@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useMoralisWeb3Api } from 'react-moralis';
+import { useMoralis, useMoralisWeb3Api } from 'react-moralis';
+import { Card, Image, Tooltip, Modal, Input, Skeleton } from "antd";
+import {
+	FileSearchOutlined,
+	SendOutlined,
+	ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { getExplorer } from "helpers/networks";
+import SearchCollections from './SearchCollections';
 
 /* 
 #################################################################
-################	Working Explore Page	#####################
+################	Experimental Explore Page	#####################
 #################################################################
 */
 
-const Explore = () => {
+const NFTMarket = () => {
+    const { Moralis, chainId } = useMoralis();
     const Web3Api = useMoralisWeb3Api();
     const [count, setCount] = useState(0);
     const [nftObject, setnftObject] = useState({});
@@ -19,8 +28,8 @@ const Explore = () => {
         await artist 
         
         const options = {
-            address: "0x60e4d786628fea6478f785a6d7e704777c86a7c6", // <artist>
-            chain: 'eth',
+            address: "0xB74bf94049D2c01f8805B8b15Db0909168Cabf46", // <artist>
+            chain: 'rinkeby',
             limit: 50
         }
 
@@ -52,7 +61,7 @@ const Explore = () => {
     // }, [artist])
 
     useEffect(() => {
-        fetchAllTokenIds('0xE93C817Ed22EA606B2a948C1536013013F34DBB9')
+        fetchAllTokenIds('0x0000')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -78,7 +87,7 @@ const Explore = () => {
 			
             {nftObject? 
                 <div className='card-row'>
-                {nftArray.map((items) => {
+                {nftArray.map((items, index) => {
                     // eslint-disable-next-line no-lone-blocks
                     {/* console.log(items) */}
                     const {metadata, token_id, token_uri} = items
@@ -87,24 +96,60 @@ const Explore = () => {
                     const {name, description, image} = metaData;
                     
                     return (
-                        <div className="card" key={token_id} style={{width: '18rem', maxWidth:'18rem', padding: '10px', margin: '10px'}}>
-                        
-                        <img 
-							className="card-img-top" 
-							src={"https://ipfs.infura.io/ipfs/"+image.split("//")[1]}
-							alt="Card img cap" 
-							style={{maxHeight: "300px"}} />
+                        <Card
+								hoverable
+								key={index}
+								actions={[
+									
+									<Tooltip
+										title='View On Blockexplorer'
+                                        key={index}>
+										<FileSearchOutlined
+											onClick={() =>
+												window.open(
+													`${getExplorer(
+														chainId,
+													)}address/${
+														items.token_address
+													}`,
+													"_blank",
+												)
+											}
+										/>
+									</Tooltip>,
 
-                            <div className="card-body">
-
-                                <h5 className="card-title">{name}</h5>
-								{/* <p className="card-text">{"https://ipfs.infura.io/ipfs/"+image.split("//")[1]}</p> */}
-                                <p className="card-text">{token_id}</p>
-                                <p className="card-text">{description}</p>
-                                <a href={token_uri} className="btn btn-primary" id='meta-data-button' target='_blank' rel='noreferrer'>View Metadata</a>
-                            </div>
-                            <br/>
-                        </div>
+									<Tooltip
+										title='Place Bid'
+                                        key={index}>
+										<ShoppingCartOutlined
+                                            key={index}
+											onClick={() =>
+												alert(
+													"EZPZ INTEGRATION COMING!",
+												)
+											}
+										/>
+									</Tooltip>,
+								]}
+								style={{
+									width: 240,
+									border: "2px solid #e7eaf3",
+								}}
+								cover={
+									<img
+                                        className="card-img-top" 
+                                        src={"https://ipfs.infura.io/ipfs/"+image.split("//")[1]}
+                                        alt="Card img cap" 
+                                        style={{maxHeight: "300px"}}
+										key={index}
+									/>
+								}>
+								<Card.Meta
+									title={name}
+									description={description}
+                                    style = {{color: "#0000000"}}
+								/>
+							</Card>
                     )  
                 })}
             </div>
@@ -116,4 +161,4 @@ const Explore = () => {
     )
 }
 
-export default Explore
+export default NFTMarket;

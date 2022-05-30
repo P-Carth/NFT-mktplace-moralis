@@ -1,6 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useMoralisWeb3Api } from 'react-moralis';
+import React, { useState } from "react";
+import { useMoralis, useNFTBalances, useWeb3ExecuteFunction } from "react-moralis";
 import { Card, Image, Tooltip, Modal, Input, Skeleton } from "antd";
+import {
+	FileSearchOutlined,
+	SendOutlined,
+	ShoppingCartOutlined,
+} from "@ant-design/icons";
+import { getExplorer } from "helpers/networks";
+import AddressInput from "./AddressInput";
+import { useApiContract } from "react-moralis";
+import { contractABI, rinkebyContractAddress, ERC721ApproveABI, rinkebyERC721ContractAddress } from '../contracts/contractABI';
+
+const { Meta } = Card;
 
 const styles = {
 	NFTs: {
@@ -15,51 +26,101 @@ const styles = {
 	},
 };
 
-const NFTTokenIds = () => {
-    const Web3Api = useMoralisWeb3Api();
-    const [count, setCount] = useState(0);
-    const [nftObject, setnftObject] = useState({});
-    const [nftArray, setNftArray] = useState([]);
-    const [artist, setArtist] = useState('');
-    //* 0xE93C817Ed22EA606B2a948C1536013013F34DBB9 !!!!!!!!!!!!GOOD!!!!!!!!!!!!!
-    //* 0x2995EdF91516499909a5b2565F95F3CD7F8e5Beb !!!!!!!!!! MINE !!!!!!!!!!!!!!
-    //* 0xa7a26b29d4530Ac7EAAFd8238474979508eE2D27 !!!!!!!!!! GOOD Rate limit 6 !!!!!!!!!
-	const fetchAllTokenIds = async () => {
-		const options = {
-		  address: "0x7dE3085b3190B3a787822Ee16F23be010f5F8686",
-		  chain: "eth",
+function NFTBalanceTest() {
+	const { data: NFTBalances } = useNFTBalances();
+	const { authenticate, isWeb3Enabled, isAuthenticated, isAuthenticating, user, enableWeb3, logout, authError, userError,Moralis, web3,chainId } = useMoralis();
+	const [visible, setVisibility] = useState(false);
+	const [nftToSend, setNftToSend] = useState(null);
+	const [price, setPrice] = useState();
+
+	const [nftToSell, setNftToSell] = useState(null);
+
+	const contractProcessor = useWeb3ExecuteFunction();
+	const contractABIJson = JSON.parse(contractABI);
+
+	const ERC721ApproveABIJson = JSON.parse(ERC721ApproveABI);
+
+	const listItemFunction = "createListing";
+	
+
+	async function list(nft, currentPrice) {
+    const web3 = await Moralis.enableWeb3();    
+		// console.log('ok start listing ', nft, currentPrice)
+		const p = currentPrice * ("1e" + 18);
+		const ops = {
+			contractAddress: rinkebyContractAddress,
+			functionName: listItemFunction,
+			abi: contractABIJson,
+			params: {_params: 
+        
+            (listingId , tokenOwner , assetContract , tokenId , startTime , endTime , quantity , currency , reservePricePerToken , buyoutPricePerToken , tokenType , listingType)
+            // address of the contract the asset you want to list is on
+            //assetContractAddress: nft.token_address,
+            // token ID of the asset you want to list
+            //tokenId: nft.token_id,
+            // when should the listing open up for offers
+            //startTimestamp: new Date(),
+            // how long the listing will be open for
+            //listingDurationInSeconds: 86400,
+            // how many of the asset you want to list
+           // quantity: 1,
+            // address of the currency contract that will be used to pay for the listing
+           // currencyContractAddress: 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE,
+            // how much the asset will be sold for
+           // buyoutPricePerToken: String(p),
+			},
 		};
-		const NFTs = await Web3Api.token.getAllTokenIds(options);
-		console.log(NFTs);
-	  };
 
-        
+		// console.log('start calling on-chain function')
+		// console.log(ops);
 
-        const NFTs = await Web3Api.token.getAllTokenIds(options);
-        let total = NFTs.result.length;
-        
-        setCount(total);
-        // console.log(total);
+		await contractProcessor.fetch({
+			params: ops,
+			onSuccess: (result) => {
+				console.log("item listed");
+				console.log(result)
 
-        setNftArray([...NFTs.result])
-        // console.log(NFTs.result);
+				addItemImage();
+			},
+			onError: (error) => {
+				console.log("something went wrong");
+				console.log(error);
+			}
+		})
+	}
 
-        setnftObject(NFTs)
-        // console.log(nftObject)
+	function addItemImage(){
+        const ItemImage = Moralis.Object.extend("ItemImages");
+        const newItemImage = new ItemImage();
+
+        newItemImage.set("image", nftToSell.image);
+        newItemImage.set("nftContract", nftToSell.token_address);
+        newItemImage.set("tokenId", nftToSell.token_id);
+        newItemImage.set("name", nftToSell.name);
+
+		newItemImage.save();
     }
 
-	console.log("NFTTokenIds", NFTTokenIds);
+	const handleSellClick = (nft) => {
+		setNftToSell(nft);
+		setVisibility(true);
+	};
+
+	const handleChange = (e) => {
+		setAmount(e.target.value);
+	};
+
+	// console.log("NFTBalances", NFTBalances);
 	return (
 		<>
 			<div style={styles.NFTs}>
-				<Skeleton loading={!NFTTokenIds?.result}>
-					{NFTTokenIds?.result ? (
-						NFTTokenIds.result.map((nft, index) => (
+				<Skeleton loading={!NFTBalances?.result}>
+					{NFTBalances?.result ? (
+						NFTBalances.result.map((nft, index) => (
 							<Card
 								hoverable
 								key={index}
 								actions={[
-									
 									<Tooltip
 										title='View On Blockexplorer'
 										key={index}>
@@ -68,25 +129,19 @@ const NFTTokenIds = () => {
 												window.open(
 													`${getExplorer(
 														chainId,
-													)}address/${
-														nft.token_address
+													)}address/${nft.token_address
 													}`,
 													"_blank",
 												)
 											}
 										/>
 									</Tooltip>,
-									
 									<Tooltip
-										title='List for Sale'
+										title='List this NFT'
 										key={index}>
 										<ShoppingCartOutlined
 											key={index}
-											onClick={() =>
-												alert(
-													"EZPZ INTEGRATION COMING!",
-												)
-											}
+											onClick={() => handleSellClick(nft)}
 										/>
 									</Tooltip>,
 								]}
@@ -115,8 +170,27 @@ const NFTTokenIds = () => {
 					)}
 				</Skeleton>
 			</div>
+			<Modal
+				title={`Sell ${nftToSell?.name || "NFT"}`}
+				visible={visible}
+				onCancel={() => setVisibility(false)}
+				onOk={() => list(nftToSell, price)}
+				okText='Sell'>
+
+				<img src={nftToSell?.image}
+					style={
+						{
+							width: "250px",
+							margin: "auto",
+							borderRadius: "10px",
+							marginBottom: "15px"
+						}
+					}
+				/>
+				<Input autoFocus placeholder="Set Price in ETH/MATIC" onChange={e => setPrice(e.target.value)} />
+			</Modal>
 		</>
 	);
 }
 
-export default NFTTokenIds;
+export default NFTBalanceTest;

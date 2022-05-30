@@ -1,4 +1,4 @@
-import React from "react";
+import {React , useState} from "react";
 import { useRouter } from "next/router";
 import { Menu, Button } from "antd";
 import Link from "next/link";
@@ -65,10 +65,10 @@ function MenuItems() {
 				</Link>
 			</Menu.Item>
 			*/}
-			<Menu.Item key='/nftBalanceTest'>
-				<Link href='/nftBalanceTest'>
+			<Menu.Item key='/nftMarket'>
+				<Link href='/nftMarket'>
 					<Button size="large" shape="round" type="text">
-					<a>NFTs Test</a>
+					<a>NFT Market</a>
 					</Button>
 				</Link>
 			</Menu.Item>

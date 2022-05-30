@@ -27,7 +27,7 @@ const Explore = () => {
         await artist 
         
         const options = {
-            address: "0x968518401F4a80bE886C91e50033e340c9efD113", // <artist>
+            address: "0xB74bf94049D2c01f8805B8b15Db0909168Cabf46", // <artist>
             chain: 'rinkeby',
             limit: 50
         }
@@ -160,4 +160,4 @@ const Explore = () => {
     )
 }
 
-export default Explore
+export default Explore;
