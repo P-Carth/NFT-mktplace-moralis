@@ -167,7 +167,7 @@ function NFTBalance() {
 								}>
 								<Meta
 									title={nft.name}
-									description={nft.token_address}
+									description={nft?.contract_type?.toLowerCase()}
 								/>
 							</Card>
 						))

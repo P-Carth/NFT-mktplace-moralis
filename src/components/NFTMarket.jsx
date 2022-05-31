@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useMoralis, useMoralisWeb3Api } from 'react-moralis';
+import { useMoralis, useMoralisWeb3Api, useMoralisQuery} from 'react-moralis';
 import { Card, Image, Tooltip, Modal, Input, Skeleton } from "antd";
 import {
+    FacebookFilled,
 	FileSearchOutlined,
 	SendOutlined,
 	ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { getExplorer } from "helpers/networks";
-import SearchCollections from './SearchCollections';
 
 /* 
 #################################################################
@@ -16,16 +16,39 @@ import SearchCollections from './SearchCollections';
 */
 
 const NFTMarket = () => {
-    const { Moralis, chainId } = useMoralis();
+    const { Moralis, chainId} = useMoralis();
     const Web3Api = useMoralisWeb3Api();
     const [count, setCount] = useState(0);
     const [nftObject, setnftObject] = useState({});
     const [nftArray, setNftArray] = useState([]);
     const [artist, setArtist] = useState('');
-    const fetchAllTokenIds = async (passedContract) => {
-        console.log('this is the artist coming in here \n' , artist)
-        setArtist(passedContract);
-        await artist 
+   // const fetch = useMoralisQuery();
+
+    
+
+   async function getNFTListings(){
+        const web3 = await Moralis.enableWeb3(); 
+        const queryAll = new Moralis.Query('CreatedMarketItems');
+        queryAll.equalTo('sold' , false);
+        const data = await queryAll.find();
+        console.log("this is data" ,data[0].type);
+        nftArray = [];
+        for (let i=0; i< data.length; i++){
+            const metadataInfo = await fetch(data[i].get("token_uri"));
+            const metadata = await metadataInfo.json();
+            const nft = {"object_id":data[i].id, "token_id":data[i].get("token_id"),"token_uri":data[i].get("token_uri"),"contract_type":data[i].get("contract_type"),"token_address":data[i].get("token_address"),"image":metadata["image"],"name":metadata["name"],"description":metadata["description"]}
+            nftArray.push(nft)
+        }
+        return nftArray ;
+        
+    }
+    
+    console.log("this is array" ,nftArray);
+
+
+
+
+    /*const fetchAllTokenIds = async () => {
         
         const options = {
             address: "0xB74bf94049D2c01f8805B8b15Db0909168Cabf46", // <artist>
@@ -46,24 +69,16 @@ const NFTMarket = () => {
 
         setnftObject(NFTs)
         // console.log(nftObject)
-    }
-
-    const handleSelectOption = async (e) => {
-        
-        console.log(e.target.value);
-        await e.target.value;
-        setArtist(e.target.value);
-        fetchAllTokenIds(e.target.value);
-    }
+    } */
 
     // useEffect(()=> {
     //     console.log('this is from useEffect artist: ', artist)
     // }, [artist])
 
     useEffect(() => {
-        fetchAllTokenIds('0x0000')
+        getNFTListings()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []) 
 
     return(
         <div className='explore'>

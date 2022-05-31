@@ -27,7 +27,7 @@ const Explore = () => {
         await artist 
         
         const options = {
-            address: "0xB74bf94049D2c01f8805B8b15Db0909168Cabf46", // <artist>
+            address: "0x7470Ea065E50e3862cd9b8fB7C77712165da80e5", // <artist>
             chain: 'rinkeby',
             limit: 50
         }
