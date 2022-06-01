@@ -27,6 +27,22 @@ function MenuItems() {
 			</Menu.Item>
 			*/}
 
+			<Menu.Item key='/nftMarket'>
+				<Link href='/nftMarket'>
+					<Button size="large" shape="round" type="text">
+					<a>NFT Market</a>
+					</Button>
+				</Link>
+			</Menu.Item>
+
+			<Menu.Item key='/nftBalance'>
+				<Link href='/nftBalance'>
+					<Button size="large" shape="round" type="text">
+					<a>My NFTs</a>
+					</Button>
+				</Link>
+			</Menu.Item>
+
 			<Menu.Item key='/explore'>
 				<Link href='/explore'>
 					<Button size="large" shape="round" type="text">
@@ -63,23 +79,7 @@ function MenuItems() {
 					<a>💸 Transfers</a>
 				</Link>
 			</Menu.Item>
-			*/}
-			<Menu.Item key='/nftMarket'>
-				<Link href='/nftMarket'>
-					<Button size="large" shape="round" type="text">
-					<a>NFT Market</a>
-					</Button>
-				</Link>
-			</Menu.Item>
-			<Menu.Item key='/nftBalance'>
-				<Link href='/nftBalance'>
-					<Button size="large" shape="round" type="text">
-					<a>My NFTs</a>
-					</Button>
-				</Link>
-			</Menu.Item>
 
-			{/*
 			<Menu.Item key='/contract'>
 				<Link href='/contract'>
 					<Button size="large" shape="round" type="text">

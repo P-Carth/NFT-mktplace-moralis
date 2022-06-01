@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMoralis, useMoralisWeb3Api, useMoralisQuery} from 'react-moralis';
-import { Card, Image, Tooltip, Modal, Badge, Alert, Spin  } from "antd";
+import { Card, Image, Tooltip, Modal, Badge, Alert, Spin, PageHeader  } from "antd";
 import {
     FacebookFilled,
 	FileSearchOutlined,
@@ -11,6 +11,7 @@ import { getExplorer } from "helpers/networks";
 import { useWeb3ExecuteFunction } from "react-moralis";
 import { contractABI, rinkebyContractAddress, ERC721ApproveABI, rinkebyERC721ContractAddress } from '../contracts/contractABI';
 import { useIPFS } from 'hooks/useIPFS';
+
 
 /* 
 #################################################################
@@ -72,12 +73,7 @@ const NFTMarket = () => {
         const nftObjectArray = await Promise.all(data.map(async item => {
             const options = { address: item.attributes.nftContract, chain: "rinkeby", token_id: item.attributes.tokenId };
             const nftOwner = await Moralis.Web3API.token.getTokenIdMetadata(options);
-            /*const object = {
-                 image: data.image,
-                 animation_url: data.animation_url && data.animation_url,
-                 tokenId: item.attributes.tokenId,
-                 nftOwner: nftOwner.owner_of
-            } */
+
             console.log("So this is where the magic happen",nftOwner)
             // if the NFT's metadata is missing, fetch the NFT's token_uri and parse though it 
             if (nftOwner.metadata === null) {
@@ -93,6 +89,23 @@ const NFTMarket = () => {
                 console.log("😥😥😥😥", error);
               }
             }
+            /*          !!Temporary work around to avoid CORS issues when retrieving NFT images!!
+              Create a proxy server as per https://dev.to/terieyenike/how-to-create-a-proxy-server-on-heroku-5b5c
+              Replace <your url here> with your proxy server_url below
+              Remove comments :)
+  
+                try {
+                  await fetch(`<your url here>/${NFT.token_uri}`)
+                  .then(response => response.json())
+                  .then(data => {
+                    NFT.image = resolveLink(data.image);
+                  });
+                } catch (error) {
+                  setFetchSuccess(false);
+                }
+  
+            */
+
 
             return nftOwner
         }))
@@ -111,60 +124,7 @@ const NFTMarket = () => {
     }, []);
     console.log("This is the in-between version: ", nftObjectArray);
 
-    useEffect(() => {
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-        
-        
-        async () => {
-          if (nftObjectArray) {
-            console.log("THERES NO WAY THIS DOESN'T LOAD");
-            const NFTs = nftObjectArray;
-            setFetchSuccess(true);
-            for (let NFT of NFTs) {
-              if (NFT?.metadata) {
-                NFT.metadata = JSON.parse(NFT.metadata);
-                NFT.image = resolveLink(NFT.metadata?.image);
-              } else if (NFT?.token_uri) {
-                console.log("THERES NO WAY THIS DOESN'T LOAD");
-                try {
-                  await fetch(NFT.token_uri)
-                    .then((response) => response.json())
-                    .then((data) => {
-                      NFT.image = resolveLink(data.image);
-
-                    });
-                } catch (error) {
-                  setFetchSuccess(false);
-                  console.log("THERES NO WAY THIS DOESN'T LOAD");
-                   
-              /*          !!Temporary work around to avoid CORS issues when retrieving NFT images!!
-              Create a proxy server as per https://dev.to/terieyenike/how-to-create-a-proxy-server-on-heroku-5b5c
-              Replace <your url here> with your proxy server_url below
-              Remove comments :)
-  
-                try {
-                  await fetch(`<your url here>/${NFT.token_uri}`)
-                  .then(response => response.json())
-                  .then(data => {
-                    NFT.image = resolveLink(data.image);
-                  });
-                } catch (error) {
-                  setFetchSuccess(false);
-                }
-  
-   */
-                }
-            }
-        }
-        console.log("looks like its finally ready!!")
-        setnftObjectArray(NFTs);
-        }
-        setnftObjectArray(NFTs);
-        console.log("IT REALLY DID EVEN WORK, but it got skipped");
-    };
-    setArtist("Wait so I am confused")
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []); 
+ 
     
     console.log("Most updated version2: ", nftObjectArray);
     console.log("the moment of truth: ", artist);
@@ -335,9 +295,11 @@ const NFTMarket = () => {
     
 
     return(
+        
         <div className='explore'>
+            {/*
             <h2>There are {NFTcount} NFTs available</h2>
-			
+            */}
             {nftObjectArray? 
                 <div className='card-row'>
                 {nftObjectArray.map((items, index) => {

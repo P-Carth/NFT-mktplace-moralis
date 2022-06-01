@@ -10,7 +10,7 @@ import { getExplorer } from "helpers/networks";
 
 /* 
 #################################################################
-################	Experimental Explore Page	#####################
+################	Experimental Explore Page	#################
 #################################################################
 */
 
@@ -21,19 +21,18 @@ const Explore = () => {
     const [nftObject, setnftObject] = useState({});
     const [nftArray, setNftArray] = useState([]);
     const [artist, setArtist] = useState('');
-    const fetchAllTokenIds = async (passedContract) => {
-        console.log('this is the artist coming in here \n' , artist)
-        setArtist(passedContract);
-        await artist 
+
+    const fetchAllTokenIds = async () => {
         
         const options = {
-            address: "0x7470Ea065E50e3862cd9b8fB7C77712165da80e5", // <artist>
+            // NFT Collection Address
+            address: "0x7470Ea065E50e3862cd9b8fB7C77712165da80e5", 
+            // Chain
             chain: 'rinkeby',
+            // # of NFTs
             limit: 50
         }
-
-        
-
+        // Moralis Built-in Query
         const NFTs = await Web3Api.token.getAllTokenIds(options);
         let total = NFTs.result.length;
         
@@ -51,39 +50,20 @@ const Explore = () => {
         
         console.log(e.target.value);
         await e.target.value;
-        setArtist(e.target.value);
         fetchAllTokenIds(e.target.value);
     }
 
-    // useEffect(()=> {
-    //     console.log('this is from useEffect artist: ', artist)
-    // }, [artist])
-
+    //run fetchAllTokenIds()
     useEffect(() => {
-        fetchAllTokenIds('0x0000')
+        fetchAllTokenIds()
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(
         <div className='explore'>
+            {/*
             <h4>NFT Collection Total is {count}</h4>
-            
-			{/*  #############################################################################################
-				 ###### The following is used to create a selector for a few choices of nft collections ######
-				 #############################################################################################
-
-			<h5>Select an artist</h5>
-            <div className='select'>
-                <select className="form-select" aria-label="Default select" onChange={handleSelectOption}>
-                    {/* <option selected>Select Artist</option> 
-                    <option value="0xE93C817Ed22EA606B2a948C1536013013F34DBB9">Mutant Ape Yacht Club</option>
-                    <option value="0x2995EdF91516499909a5b2565F95F3CD7F8e5Beb">Cool Cat</option>
-                    <option value="0xa7a26b29d4530Ac7EAAFd8238474979508eE2D27">Hodge Podge</option>
-                </select>
-            </div>
-			*/}
-
-			
+            */}			
             {nftObject? 
                 <div className='card-row'>
                 {nftArray.map((items, index) => {
