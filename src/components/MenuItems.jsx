@@ -17,16 +17,15 @@ function MenuItems() {
 				justifyContent: "center",
 			}}
 			defaultSelectedKeys={[pathname]}>
+			{/*
 			<Menu.Item key='/quickstart'>
 				<Link href='/quickstart'>
 					<Button size="large" shape="round" type="text">
 					<a>Quick Start</a>
 					</Button>
 				</Link>
-				{/* <Link href='/quickstart'>
-					<a>Quick Start</a>
-				</Link> */}
 			</Menu.Item>
+			*/}
 
 			<Menu.Item key='/explore'>
 				<Link href='/explore'>
@@ -75,11 +74,12 @@ function MenuItems() {
 			<Menu.Item key='/nftBalance'>
 				<Link href='/nftBalance'>
 					<Button size="large" shape="round" type="text">
-					<a>NFTs</a>
+					<a>My NFTs</a>
 					</Button>
 				</Link>
 			</Menu.Item>
 
+			{/*
 			<Menu.Item key='/contract'>
 				<Link href='/contract'>
 					<Button size="large" shape="round" type="text">
@@ -87,6 +87,7 @@ function MenuItems() {
 					</Button>
 				</Link>
 			</Menu.Item>
+			*/}
 		</Menu>
 	);
 }

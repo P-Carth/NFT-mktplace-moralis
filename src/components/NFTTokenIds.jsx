@@ -93,7 +93,14 @@ const Explore = () => {
                     const metaData = JSON.parse(metadata)
                     
                     const {name, description, image} = metaData;
+
+                    if (image.includes('ipfs://ipfs')) {
+                            image = "https://ipfs.infura.io/"+image.split("//")[1]
+                        } else if (image.includes('ipfs://')) {
+                            image = "https://ipfs.infura.io/ipfs/"+image.split("//")[1]
+                        }
                     
+                    console.log("**********************these are metData: ", metaData)
                     return (
                         <Card
 								hoverable
@@ -137,7 +144,7 @@ const Explore = () => {
 								cover={
 									<img
                                         className="card-img-top" 
-                                        src={"https://ipfs.infura.io/ipfs/"+image.split("//")[1]}
+                                        src={image}
                                         alt="Card img cap" 
                                         style={{maxHeight: "300px"}}
 										key={index}
