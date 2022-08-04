@@ -9,20 +9,7 @@
 
 > Solidity
 
-> Rinkeby & Mumbai Testnets
-
-# `NFT-Marketplace`
-
-### Built using:
-> React components and hooks for fast building dApps without running own backend
-
-> Next JS
-
-> Moralis
-
-> Solidity
-
-> Rinkeby & Mumbai Testnets
+> Rinkeby Testnet
 
 ## Steps to re-create:
 ### `Required` - if you do not have a moralis server: register for free to get an application_id and server_url @ https://moralis.io/
@@ -57,5 +44,7 @@ NEXT_PUBLIC_MORALIS_SERVER_URL = https://xxxxxx.grandmoralis.com:2053/server
 <h3> Market Page </h3>
 <p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/market.png" width="800"/> </img> </p>
 
-
+## Summary
+> This project was completed as the final project for UM fintech bootcamp.
+> It uses react and moralis to connect a simple front-end to a solidity marketplace contract. The solidity contract only provides functionality for ERC-721 contracts, allowing `approval`, `list`, and `buy` functionality on the Rinkeby testnet. The `my nfts` page however operates for multiple chains to display any NFTs owned by the user's contract address.
 
