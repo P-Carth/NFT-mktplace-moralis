@@ -50,12 +50,12 @@ NEXT_PUBLIC_MORALIS_SERVER_URL = https://xxxxxx.grandmoralis.com:2053/server
 `yarn start` or `npm run dev`
 ```
 ## Pages
-### Explore page
-<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/explore.png" width="500"/> </p>
-### My NFTs Page
-<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/myNfts.png" width="500"/> </p>
-### Market Page
-<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/market.png" width="500"/> </p>
+<h3> Explore page </h3>
+<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/explore.png" width="800"> </img> </p>
+<h3> My NFTs Page </h3>
+<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/myNfts.png" width="800"/> </img> </p>
+<h3> Market Page </h3>
+<p align='left'> <img src="https://github.com/P-Carth/NFT-mktplace-moralis/blob/main/images/market.png" width="800"/> </img> </p>
 
 
 
