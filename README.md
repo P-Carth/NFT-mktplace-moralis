@@ -46,5 +46,5 @@ NEXT_PUBLIC_MORALIS_SERVER_URL = https://xxxxxx.grandmoralis.com:2053/server
 
 ## Summary
 > This project was completed as the final project for UM fintech bootcamp.
-> It uses react and moralis to connect a simple front-end to a solidity marketplace contract. The solidity contract only provides functionality for ERC-721 contracts, allowing `approval`, `list`, and `buy` functionality on the Rinkeby testnet. The `my nfts` page however operates for multiple chains to display any NFTs owned by the user's contract address.
+> It uses react and moralis to connect a simple front-end to a solidity marketplace contract. The solidity contract only provides functionality for ERC-721 contracts, allowing `approval`, `list`, and `buy` functionality on the Rinkeby testnet. The `my nfts` page however operates for multiple chains to display any NFTs owned by the user's address.
 
