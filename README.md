@@ -1,4 +1,5 @@
 # `NFT-Marketplace`
+[![Deprecated](https://img.shields.io/badge/status-deprecated-red.svg)](YOUR_REPOSITORY_URL)
 
 ### Built using:
 > React components and hooks for fast building dApps without running own backend
